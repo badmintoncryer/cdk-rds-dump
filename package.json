@@ -17,8 +17,6 @@
     "eslint": "npx projen eslint",
     "package": "npx projen package",
     "package-all": "npx projen package-all",
-    "package:dotnet": "npx projen package:dotnet",
-    "package:java": "npx projen package:java",
     "package:js": "npx projen package:js",
     "package:python": "npx projen package:python",
     "post-compile": "npx projen post-compile",
@@ -67,6 +65,16 @@
     "aws-cdk-lib": "^2.87.0",
     "constructs": "^10.0.5"
   },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.370.0",
+    "@aws-sdk/client-secrets-manager": "^3.370.0",
+    "mysqldump": "^3.2.0"
+  },
+  "bundledDependencies": [
+    "@aws-sdk/client-s3",
+    "@aws-sdk/client-secrets-manager",
+    "mysqldump"
+  ],
   "keywords": [
     "cdk"
   ],
@@ -118,20 +126,9 @@
   "jsii": {
     "outdir": "dist",
     "targets": {
-      "java": {
-        "package": "com.github.malaysia-cryer.cdk-rds-dump",
-        "maven": {
-          "groupId": "com.github.malaysia-cryer",
-          "artifactId": "cdk-rds-dump"
-        }
-      },
       "python": {
         "distName": "cdk-rds-dump",
         "module": "cdk_rds_dump"
-      },
-      "dotnet": {
-        "namespace": "CdkRdsDump",
-        "packageId": "CdkRdsDump"
       }
     },
     "tsc": {
