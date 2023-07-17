@@ -1,15 +1,15 @@
-import * as path from 'path';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as events from 'aws-cdk-lib/aws-events';
-import * as targets from 'aws-cdk-lib/aws-events-targets';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as nodejsLambda from 'aws-cdk-lib/aws-lambda-nodejs';
-import * as rds from 'aws-cdk-lib/aws-rds';
-import * as s3 from 'aws-cdk-lib/aws-s3';
-import { Construct } from 'constructs';
+import * as path from "path";
+import * as ec2 from "aws-cdk-lib/aws-ec2";
+import * as events from "aws-cdk-lib/aws-events";
+import * as targets from "aws-cdk-lib/aws-events-targets";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as nodejsLambda from "aws-cdk-lib/aws-lambda-nodejs";
+import * as rds from "aws-cdk-lib/aws-rds";
+import * as s3 from "aws-cdk-lib/aws-s3";
+import { Construct } from "constructs";
 
 const dbEngines = {
-  MYSQL: 'mysql',
+  MYSQL: "mysql",
 };
 
 type DbEngine = (typeof dbEngines)[keyof typeof dbEngines];
@@ -57,7 +57,7 @@ export class RdsDump extends Construct {
       (unsecureUserName == null || unsecurePassword == null)
     ) {
       throw new Error(
-        'Either secretId or userName and password must be specified.',
+        "Either secretId or userName and password must be specified.",
       );
     }
 
@@ -96,23 +96,23 @@ export class RdsDump extends Construct {
         bundling: {
           minify: true,
           sourceMap: true,
-          target: 'es2020',
-          externalModules: ['aws-sdk', 'nock', 'mock-aws-s3'],
+          target: "es2020",
+          externalModules: ["aws-sdk", "nock", "mock-aws-s3"],
           loader: {
-            '.node': 'file',
+            ".node": "file",
           },
         },
-        depsLockFilePath: './yarn.lock',
+        depsLockFilePath: "./yarn.lock",
         runtime: lambda.Runtime.NODEJS_18_X,
         entry: path.join(__dirname, `./lambda/${dbEngine}/index.ts`),
-        handler: 'handler',
+        handler: "handler",
         memorySize: 1024,
         environment: {
           S3_BUCKET: dumpBucket.bucketName,
           RDS_ENDPOINT: rdsCluster.clusterEndpoint.hostname,
-          RDS_SECRET_ID: secretId ?? '',
-          RDS_USERNAME: unsecureUserName ?? '',
-          RDS_PASSWORD: unsecurePassword ?? '',
+          RDS_SECRET_ID: secretId ?? "",
+          RDS_USERNAME: unsecureUserName ?? "",
+          RDS_PASSWORD: unsecurePassword ?? "",
           DATABASE_NAME: databaseName,
           ...lambdaEnv,
         },
@@ -121,8 +121,8 @@ export class RdsDump extends Construct {
         // If not given, the CDK will auto-generate it.
         ...(lambdaNsg != null &&
           lambdaNsg.length > 0 && {
-          securityGroups: lambdaNsg,
-        }),
+            securityGroups: lambdaNsg,
+          }),
       },
     );
 

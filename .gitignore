@@ -38,6 +38,8 @@ junit.xml
 /dist/version.txt
 !/.github/workflows/upgrade-main.yml
 !/.github/pull_request_template.md
+!/.prettierignore
+!/.prettierrc.json
 !/.npmrc
 !/test/
 !/tsconfig.dev.json

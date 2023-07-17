@@ -10,6 +10,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   jsiiVersion: "~5.0.0",
   name: "cdk-rds-dump",
   projenrcTs: true,
+  prettier: true,
   repositoryUrl: "https://github.com/malaysia.cryer/cdk-rds-dump.git",
   description: "CDK Construct Library by Typescript for RDS Dump",
   python: {

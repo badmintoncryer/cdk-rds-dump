@@ -1,6 +1,6 @@
-import { RdsDump } from '../src';
+import { RdsDump } from "../src";
 
-test('RdsDump', () => {
+test("RdsDump", () => {
   console.log(RdsDump);
   // const props: RdsDumpProps = {
   //   dbEngine: "mysql",
