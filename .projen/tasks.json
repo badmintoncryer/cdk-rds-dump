@@ -163,9 +163,6 @@
       "steps": [
         {
           "spawn": "package:js"
-        },
-        {
-          "spawn": "package:python"
         }
       ]
     },
@@ -175,15 +172,6 @@
       "steps": [
         {
           "exec": "jsii-pacmak -v --target js"
-        }
-      ]
-    },
-    "package:python": {
-      "name": "package:python",
-      "description": "Create python language bindings",
-      "steps": [
-        {
-          "exec": "jsii-pacmak -v --target python"
         }
       ]
     },
@@ -203,28 +191,6 @@
     "pre-compile": {
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
-    },
-    "publish:git": {
-      "name": "publish:git",
-      "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
-      "env": {
-        "CHANGELOG": "dist/changelog.md",
-        "RELEASE_TAG_FILE": "dist/releasetag.txt",
-        "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
-        "VERSION_FILE": "dist/version.txt"
-      },
-      "steps": [
-        {
-          "builtin": "release/update-changelog"
-        },
-        {
-          "builtin": "release/tag-version"
-        },
-        {
-          "exec": "git push --follow-tags origin main"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
     },
     "release": {
       "name": "release",
@@ -248,9 +214,6 @@
         },
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
-        },
-        {
-          "spawn": "publish:git"
         }
       ]
     },
