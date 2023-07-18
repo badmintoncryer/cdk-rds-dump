@@ -1,16 +1,56 @@
-# Under construction!!!!!!!
 # cdk-rds-dump
-CDK constructs that dump the contents of AWS RDS, generate SQL files, and save them to S3
 
-# Welcome to your CDK TypeScript Construct Library project
+cdk-rds-dump is a Constructs library for AWS CDK that provides the functionality to dump the contents of Amazon RDS, generate it as an SQL file, and store it in Amazon S3.
 
-You should explore the contents of this project. It demonstrates a CDK Construct Library that includes a construct (`CdkRdsDump`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+![Architecture](./image/architecture.png)
 
-The construct defines an interface (`CdkRdsDumpProps`) to configure the visibility timeout of the queue.
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/badmintoncryer/cdk-rds-dump)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![npm version](https://badge.fury.io/js/cdk-rds-dump.svg)](https://badge.fury.io/js/cdk-rds-dump)
+[![Build Status](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/build.yml/badge.svg)](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/build.yml)
+[![Release Status](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/release.yml/badge.svg)](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/release.yml)
+[![npm downloads](https://img.shields.io/npm/dm/cdk-rds-dump.svg?style=flat)](https://www.npmjs.com/package/cdk-rds-dump)
 
-## Useful commands
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
+## Usage
+
+Install from npm:
+
+```sh
+npm i cdk-rds-dump
+```
+
+Then write CDK code as below:
+
+```ts
+import { RdsDump } from 'cdk-rds-dump';
+
+declare const rdsCluster: rds.DatabaseCluster;
+new RdsDump(this, 'MyRdsDump', {
+  dbEngine: "mysql",
+  rdsCluster: rdsCluster,
+  schedule: events.Schedule.cron({ minute: "0", hour: "0" }),
+  databaseName: 'myDatabase',
+  createSecretsManagerVPCEndpoint: false,
+});
+```
+
+## How does it work?
+
+This code creates a new RDS cluster and uses the RdsDump Construct to dump the data from that RDS cluster. The dumped data is generated as an SQL file and stored in Amazon S3.
+
+For detailed usage and details of the parameters, refer to the API documentation.
+
+## Why do we need this construct?
+
+AWS RDS is a very useful managed RDB service and includes, by default, the ability to create snapshots.
+However, in some cases, such as for development reasons, it is easier to handle SQL files dumped from the DB.
+Therefore, cdk-rds-dump was created as a construct to easily create SQL files on a regular basis.
+
+## Contribution
+
+Contributions to the project are welcome. Submit improvement proposals via pull requests or propose new features.
+
+## License
+
+This project is licensed under the Apache-2.0 License.
