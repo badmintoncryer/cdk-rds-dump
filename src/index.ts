@@ -1,13 +1,11 @@
-import * as path from "path";
+import { Duration } from "aws-cdk-lib";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as events from "aws-cdk-lib/aws-events";
 import * as targets from "aws-cdk-lib/aws-events-targets";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as nodejsLambda from "aws-cdk-lib/aws-lambda-nodejs";
 import * as rds from "aws-cdk-lib/aws-rds";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
-import { Duration } from "aws-cdk-lib";
+import { DumpFunction } from "./lambda/dump-function";
 
 type DbEngine = "mysql";
 
@@ -71,6 +69,8 @@ export interface RdsDumpProps {
     [key: string]: string;
   };
   /**
+   * Database username.
+   *
    * We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
    * but it is also possible to specify the user name and password directly.
    * unsecureUserName is a parameter to pass the user name when the latter is used.
@@ -80,6 +80,8 @@ export interface RdsDumpProps {
    */
   readonly unsecureUserName?: string;
   /**
+   * Database Password.
+   *
    * We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
    * but it is also possible to specify the user name and password directly.
    * unsecurePassword is a parameter to pass the password when the latter is used.
@@ -89,6 +91,8 @@ export interface RdsDumpProps {
    */
   readonly unsecurePassword?: string;
   /**
+   * Database connection information stored in the Secrets Manager.
+   *
    * We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
    * but it is also possible to specify the user name and password directly.
    * If secretId is set, the corresponding secret on SecretsManager is retrieved to access the DB.
@@ -174,43 +178,26 @@ export class RdsDump extends Construct {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     });
 
-    const dumpLambda = new nodejsLambda.NodejsFunction(
-      scope,
-      `dump-lambda-${idSuffix}`,
-      {
-        bundling: {
-          minify: true,
-          sourceMap: true,
-          target: "es2020",
-          externalModules: ["aws-sdk", "nock", "mock-aws-s3"],
-          loader: {
-            ".node": "file",
-          },
-        },
-        depsLockFilePath: "./yarn.lock",
-        runtime: lambda.Runtime.NODEJS_18_X,
-        entry: path.join(__dirname, `./lambda/${dbEngine}/index.js`),
-        handler: "handler",
-        memorySize: 1024,
-        timeout: Duration.minutes(15),
-        environment: {
-          S3_BUCKET: dumpBucket.bucketName,
-          RDS_ENDPOINT: rdsCluster.clusterEndpoint.hostname,
-          RDS_SECRET_ID: secretId ?? "",
-          RDS_USERNAME: unsecureUserName ?? "",
-          RDS_PASSWORD: unsecurePassword ?? "",
-          DATABASE_NAME: databaseName,
-          ...lambdaEnv,
-        },
-        vpc: rdsCluster.vpc,
-        // If the security group for lambda is given, it will be granted.
-        // If not given, the CDK will auto-generate it.
-        ...(lambdaNsg != null &&
-          lambdaNsg.length > 0 && {
-            securityGroups: lambdaNsg,
-          }),
+    const dumpLambda = new DumpFunction(scope, `dump-lambda-${idSuffix}`, {
+      memorySize: 1024,
+      timeout: Duration.minutes(15),
+      environment: {
+        S3_BUCKET: dumpBucket.bucketName,
+        RDS_ENDPOINT: rdsCluster.clusterEndpoint.hostname,
+        RDS_SECRET_ID: secretId ?? "",
+        RDS_USERNAME: unsecureUserName ?? "",
+        RDS_PASSWORD: unsecurePassword ?? "",
+        DATABASE_NAME: databaseName,
+        ...lambdaEnv,
       },
-    );
+      vpc: rdsCluster.vpc,
+      // If the security group for lambda is given, it will be granted.
+      // If not given, the CDK will auto-generate it.
+      ...(lambdaNsg != null &&
+        lambdaNsg.length > 0 && {
+          securityGroups: lambdaNsg,
+        }),
+    });
 
     rdsCluster.secret?.grantRead(dumpLambda);
     dumpBucket.grantWrite(dumpLambda);

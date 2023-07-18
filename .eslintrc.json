@@ -58,6 +58,7 @@
         "devDependencies": [
           "**/test/**",
           "**/build-tools/**",
+          "src/lambda/dump.lambda.ts",
           ".projenrc.ts",
           "projenrc/**/*.ts"
         ],
