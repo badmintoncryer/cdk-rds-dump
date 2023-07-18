@@ -188,6 +188,7 @@ export class RdsDump extends Construct {
         RDS_USERNAME: unsecureUserName ?? "",
         RDS_PASSWORD: unsecurePassword ?? "",
         DATABASE_NAME: databaseName,
+        ENGINE: dbEngine,
         ...lambdaEnv,
       },
       vpc: rdsCluster.vpc,
