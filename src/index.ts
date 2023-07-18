@@ -8,7 +8,7 @@ import * as rds from "aws-cdk-lib/aws-rds";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 
-type DbEngine = 'mysql'
+type DbEngine = "mysql";
 
 export interface RdsDumpProps {
   readonly dbEngine: DbEngine;
