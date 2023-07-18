@@ -77,7 +77,6 @@ export class RdsDump extends Construct {
           }),
         },
       );
-      // TODO 新規作成したEndpointへの接続を許可する
     }
 
     // DBの内容をバックアップ用にS3にdumpする
