@@ -128,7 +128,7 @@ export class RdsDump extends Construct {
       dbEngine,
       rdsCluster,
       databaseName,
-      idSuffix,
+      idSuffix = "default",
       schedule,
       lambdaNsg,
       lambdaEnv,
