@@ -1,3 +1,4 @@
+# Under construction!!!!!!!
 # cdk-rds-dump
 CDK constructs that dump the contents of AWS RDS, generate SQL files, and save them to S3
 
@@ -133,11 +134,11 @@ const rdsDumpProps: RdsDumpProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint">createSecretsManagerVPCEndpoint</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.databaseName">databaseName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.dbEngine">dbEngine</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.rdsCluster">rdsCluster</a></code> | <code>aws-cdk-lib.aws_rds.DatabaseCluster</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.schedule">schedule</a></code> | <code>aws-cdk-lib.aws_events.Schedule</code> | *No description.* |
-| <code><a href="#cdk-rds-dump.RdsDumpProps.property.existSecretsManagerVPCEndpoint">existSecretsManagerVPCEndpoint</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.idSuffix">idSuffix</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaEnv">lambdaEnv</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaNsg">lambdaNsg</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup[]</code> | *No description.* |
@@ -145,6 +146,16 @@ const rdsDumpProps: RdsDumpProps = { ... }
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.secretsManagerVPCEndpointNsgId">secretsManagerVPCEndpointNsgId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.unsecurePassword">unsecurePassword</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.unsecureUserName">unsecureUserName</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `createSecretsManagerVPCEndpoint`<sup>Required</sup> <a name="createSecretsManagerVPCEndpoint" id="cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint"></a>
+
+```typescript
+public readonly createSecretsManagerVPCEndpoint: boolean;
+```
+
+- *Type:* boolean
 
 ---
 
@@ -185,16 +196,6 @@ public readonly schedule: Schedule;
 ```
 
 - *Type:* aws-cdk-lib.aws_events.Schedule
-
----
-
-##### `existSecretsManagerVPCEndpoint`<sup>Optional</sup> <a name="existSecretsManagerVPCEndpoint" id="cdk-rds-dump.RdsDumpProps.property.existSecretsManagerVPCEndpoint"></a>
-
-```typescript
-public readonly existSecretsManagerVPCEndpoint: boolean;
-```
-
-- *Type:* boolean
 
 ---
 

@@ -101,7 +101,7 @@ export class RdsDump extends Construct {
         },
         depsLockFilePath: "./yarn.lock",
         runtime: lambda.Runtime.NODEJS_18_X,
-        entry: path.join(__dirname, `./lambda/${dbEngine}/index.ts`),
+        entry: path.join(__dirname, `./lambda/${dbEngine}/index.js`),
         handler: "handler",
         memorySize: 1024,
         environment: {
