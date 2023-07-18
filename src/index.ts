@@ -7,23 +7,112 @@ import * as nodejsLambda from "aws-cdk-lib/aws-lambda-nodejs";
 import * as rds from "aws-cdk-lib/aws-rds";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
+import { Duration } from "aws-cdk-lib";
 
 type DbEngine = "mysql";
 
 export interface RdsDumpProps {
+  /**
+   * Select DB engine type. Currently only mysql can be selected.
+   *
+   * @type {DbEngine}
+   * @memberof RdsDumpProps
+   */
   readonly dbEngine: DbEngine;
+  /**
+   * RDS Cluster to dump.
+   *
+   * @type {rds.DatabaseCluster}
+   * @memberof RdsDumpProps
+   */
   readonly rdsCluster: rds.DatabaseCluster;
+  /**
+   * Schedule to dump. See aws-cdk-lib/aws-events.Schedule.
+   * ex.
+   * import * as events from 'aws-cdk-lib/aws-events'
+   * // It is executed daily at 00:00 UTC.
+   * events.Schedule.cron({ minute: "0", hour: "0" })
+   *
+   * @type {events.Schedule}
+   * @memberof RdsDumpProps
+   */
   readonly schedule: events.Schedule;
+  /**
+   * Database name to dump.
+   *
+   * @type {string}
+   * @memberof RdsDumpProps
+   */
   readonly databaseName: string;
+  /**
+   * Suffix to add to the resource ID.
+   *
+   * @type {string}
+   * @memberof RdsDumpProps
+   */
   readonly idSuffix?: string;
+  /**
+   * Security group to allow access to the lambda function.
+   *
+   * @type {ec2.ISecurityGroup[]}
+   * @memberof RdsDumpProps
+   */
   readonly lambdaNsg?: ec2.ISecurityGroup[];
+  /**
+   * Environment variables to set in the lambda function.
+   * ex. { "ENV_VAR": "value" }
+   *
+   * @type {{
+   *     [key: string]: string;
+   *   }}
+   * @memberof RdsDumpProps
+   */
   readonly lambdaEnv?: {
     [key: string]: string;
   };
+  /**
+   * We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
+   * but it is also possible to specify the user name and password directly.
+   * unsecureUserName is a parameter to pass the user name when the latter is used.
+   *
+   * @type {string}
+   * @memberof RdsDumpProps
+   */
   readonly unsecureUserName?: string;
+  /**
+   * We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
+   * but it is also possible to specify the user name and password directly.
+   * unsecurePassword is a parameter to pass the password when the latter is used.
+   *
+   * @type {string}
+   * @memberof RdsDumpProps
+   */
   readonly unsecurePassword?: string;
+  /**
+   * We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
+   * but it is also possible to specify the user name and password directly.
+   * If secretId is set, the corresponding secret on SecretsManager is retrieved to access the DB.
+   *
+   * @type {string}
+   * @memberof RdsDumpProps
+   */
   readonly secretId?: string;
+  /**
+   * It is recommended to use a secret stored in the Secrets Manager,
+   * but in that case, the lambda doing the dump needs a route to access the Secrets Manager.
+   * If createSecretsManagerVPCEndpoint is true, an Interface Endpoint is created to allow access to the Secrets Manager.
+   *
+   * @type {boolean}
+   * @memberof RdsDumpProps
+   */
   readonly createSecretsManagerVPCEndpoint: boolean;
+  /**
+   * List of IDs of security groups to attach to the Interface Endpoint for Secrets Manager.
+   * Only used if createSecretsManagerVPCEndpoint is true.
+   *
+   * @type {string}
+   * @memberof RdsDumpProps
+   */
   readonly secretsManagerVPCEndpointNsgId?: string;
 }
 
@@ -103,6 +192,7 @@ export class RdsDump extends Construct {
         entry: path.join(__dirname, `./lambda/${dbEngine}/index.js`),
         handler: "handler",
         memorySize: 1024,
+        timeout: Duration.minutes(15),
         environment: {
           S3_BUCKET: dumpBucket.bucketName,
           RDS_ENDPOINT: rdsCluster.clusterEndpoint.hostname,
