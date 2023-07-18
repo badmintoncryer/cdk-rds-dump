@@ -8,11 +8,7 @@ import * as rds from "aws-cdk-lib/aws-rds";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 
-const dbEngines = {
-  MYSQL: "mysql",
-};
-
-type DbEngine = (typeof dbEngines)[keyof typeof dbEngines];
+type DbEngine = 'mysql'
 
 export interface RdsDumpProps {
   readonly dbEngine: DbEngine;
@@ -27,7 +23,7 @@ export interface RdsDumpProps {
   readonly unsecureUserName?: string;
   readonly unsecurePassword?: string;
   readonly secretId?: string;
-  readonly existSecretsManagerVPCEndpoint?: boolean;
+  readonly createSecretsManagerVPCEndpoint: boolean;
   readonly secretsManagerVPCEndpointNsgId?: string;
 }
 
@@ -46,7 +42,7 @@ export class RdsDump extends Construct {
       unsecureUserName,
       unsecurePassword,
       secretId,
-      existSecretsManagerVPCEndpoint,
+      createSecretsManagerVPCEndpoint,
       secretsManagerVPCEndpointNsgId,
     }: RdsDumpProps,
   ) {
@@ -63,7 +59,7 @@ export class RdsDump extends Construct {
 
     // secretIdが指定されている場合は、そのsecretを利用する
     // その際に必要なsecrets manager vpc endpointを作成する
-    if (secretId != null && !existSecretsManagerVPCEndpoint) {
+    if (secretId != null && createSecretsManagerVPCEndpoint) {
       new ec2.InterfaceVpcEndpoint(
         scope,
         `secrets-manager-vpc-endpoint-${idSuffix}`,
@@ -81,6 +77,7 @@ export class RdsDump extends Construct {
           }),
         },
       );
+      // TODO 新規作成したEndpointへの接続を許可する
     }
 
     // DBの内容をバックアップ用にS3にdumpする
