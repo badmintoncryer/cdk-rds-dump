@@ -31,8 +31,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
     "mysqldump",
     "@aws-sdk/client-s3",
     "@aws-sdk/client-secrets-manager",
+    "pg-promise",
   ],
-
   // deps: ["mysqldump", "@aws-sdk/client-s3", "@aws-sdk/client-secrets-manager"],
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */

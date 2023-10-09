@@ -2,6 +2,7 @@ import { readFileSync } from "fs";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { SecretsManager } from "@aws-sdk/client-secrets-manager";
 import mysqldump from "mysqldump";
+// import pgPromise from "pg-promise";
 
 const AWS_REGION = process.env.AWS_REGION;
 const s3Client = new S3Client({ region: AWS_REGION });
@@ -34,18 +35,25 @@ export const handler = async (_event: any, _context: any): Promise<void> => {
     const { username, password } = await getDbCredentials();
     const dumpFilePath = "/tmp/dump.sql";
 
-    if (dbEngine === "mysql") {
-      // MySQLからデータをダンプ
-      // TODO ライブラリ自体は既にpublic archive済み。代替手段を考えたほうが良いかも...??
-      await mysqldump({
-        connection: {
-          host: dbEndpoint,
-          user: username,
-          password,
-          database: databaseName,
-        },
-        dumpToFile: dumpFilePath,
-      });
+    switch (dbEngine) {
+      case "mysql":
+        // MySQLからデータをダンプ
+        // TODO ライブラリ自体は既にpublic archive済み。代替手段を考えたほうが良いかも...??
+        await mysqldump({
+          connection: {
+            host: dbEndpoint,
+            user: username,
+            password,
+            database: databaseName,
+          },
+          dumpToFile: dumpFilePath,
+        });
+        break;
+      case "postgres":
+        await dumpPostgres(username, password, dumpFilePath);
+        break;
+      default:
+        throw new Error("Unsupported DB engine.");
     }
 
     console.log("DB dump completed.");
@@ -103,4 +111,32 @@ const getSecret = async (): Promise<GetSecretReturnType> => {
   }
 
   return { username, password };
+};
+
+const dumpPostgres = async (
+  username: string,
+  password: string,
+  _dumpFilePath: string,
+  port: number = 5432,
+): Promise<void> => {
+  const connection = {
+    host: dbEndpoint,
+    port: port,
+    database: databaseName,
+    user: username,
+    password: password,
+  };
+  console.log(connection);
+
+  // pgPromise()(connection);
+
+  // ダンプの内容を取得
+  // const dump = await db.one(
+  //   "SELECT pg_dump($1)",
+  //   [databaseName],
+  //   (a) => a.pg_dump,
+  // );
+
+  // // ダンプの内容をファイルに保存
+  // fs.writeFileSync(dumpFilePath, dump);
 };

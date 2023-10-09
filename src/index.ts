@@ -7,11 +7,11 @@ import * as s3 from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 import { DumpFunction } from "./lambda/dump-function";
 
-type DbEngine = "mysql";
+type DbEngine = "mysql" | "postgresql";
 
 export interface RdsDumpProps {
   /**
-   * Select DB engine type. Currently only mysql can be selected.
+   * Select DB engine type. Currently mysql and postgresql can be selected.
    *
    * @type {DbEngine}
    * @memberof RdsDumpProps
