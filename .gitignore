@@ -30,7 +30,6 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
-!/.projenrc.js
 /test-reports/
 junit.xml
 /coverage/
@@ -54,3 +53,4 @@ tsconfig.json
 !/API.md
 /assets/
 !/src/lambda/dump-function.ts
+!/.projenrc.ts
