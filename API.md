@@ -179,7 +179,8 @@ const rdsDumpProps: RdsDumpProps = { ... }
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.dbEngine">dbEngine</a></code> | <code><a href="#cdk-rds-dump.DbEngine">DbEngine</a></code> | Select DB engine type. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.rdsCluster">rdsCluster</a></code> | <code>aws-cdk-lib.aws_rds.DatabaseCluster</code> | RDS Cluster to dump. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.schedule">schedule</a></code> | <code>aws-cdk-lib.aws_events.Schedule</code> | Schedule to dump. |
-| <code><a href="#cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint">createSecretsManagerVPCEndpoint</a></code> | <code>boolean</code> | It is recommended to use a secret stored in the Secrets Manager, but in that case, the lambda doing the dump needs a route to access the Secrets Manager. |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.createS3GatewayEndpoint">createS3GatewayEndpoint</a></code> | <code>boolean</code> | Whether to create an S3 Gateway Endpoint for the VPC where the RDS is located. |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint">createSecretsManagerVPCEndpoint</a></code> | <code>boolean</code> | Whether to create an Interface Endpoint for the Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.idSuffix">idSuffix</a></code> | <code>string</code> | Suffix to add to the resource ID. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaEnv">lambdaEnv</a></code> | <code>{[ key: string ]: string}</code> | Environment variables to set in the lambda function. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaNsg">lambdaNsg</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup[]</code> | Security group to allow access to the lambda function. |
@@ -246,6 +247,19 @@ events.Schedule.cron({ minute: "0", hour: "0" })
 
 ---
 
+##### `createS3GatewayEndpoint`<sup>Optional</sup> <a name="createS3GatewayEndpoint" id="cdk-rds-dump.RdsDumpProps.property.createS3GatewayEndpoint"></a>
+
+```typescript
+public readonly createS3GatewayEndpoint: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Whether to create an S3 Gateway Endpoint for the VPC where the RDS is located.
+
+---
+
 ##### `createSecretsManagerVPCEndpoint`<sup>Optional</sup> <a name="createSecretsManagerVPCEndpoint" id="cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint"></a>
 
 ```typescript
@@ -255,8 +269,10 @@ public readonly createSecretsManagerVPCEndpoint: boolean;
 - *Type:* boolean
 - *Default:* false
 
-It is recommended to use a secret stored in the Secrets Manager, but in that case, the lambda doing the dump needs a route to access the Secrets Manager.
+Whether to create an Interface Endpoint for the Secrets Manager.
 
+It is recommended to use a secret stored in the Secrets Manager,
+but in that case, the lambda doing the dump needs a route to access the Secrets Manager.
 If createSecretsManagerVPCEndpoint is true, an Interface Endpoint is created to allow access to the Secrets Manager.
 
 ---

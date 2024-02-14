@@ -12,7 +12,7 @@ interface GetSecretReturnType {
 }
 
 const dbEngine = process.env.ENGINE ?? "";
-const dbEndpoint = process.env.AURORA_ENDPOINT ?? "";
+const dbEndpoint = process.env.RDS_ENDPOINT ?? "";
 const auroraSecretId = process.env.RDS_SECRET_ID ?? "";
 const s3Bucket = process.env.S3_BUCKET ?? "";
 const databaseName = process.env.DATABASE_NAME ?? "";
