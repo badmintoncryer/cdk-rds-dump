@@ -175,32 +175,18 @@ const rdsDumpProps: RdsDumpProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint">createSecretsManagerVPCEndpoint</a></code> | <code>boolean</code> | It is recommended to use a secret stored in the Secrets Manager, but in that case, the lambda doing the dump needs a route to access the Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.databaseName">databaseName</a></code> | <code>string</code> | Database name to dump. |
-| <code><a href="#cdk-rds-dump.RdsDumpProps.property.dbEngine">dbEngine</a></code> | <code>string</code> | Select DB engine type. |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.dbEngine">dbEngine</a></code> | <code><a href="#cdk-rds-dump.DbEngine">DbEngine</a></code> | Select DB engine type. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.rdsCluster">rdsCluster</a></code> | <code>aws-cdk-lib.aws_rds.DatabaseCluster</code> | RDS Cluster to dump. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.schedule">schedule</a></code> | <code>aws-cdk-lib.aws_events.Schedule</code> | Schedule to dump. |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint">createSecretsManagerVPCEndpoint</a></code> | <code>boolean</code> | It is recommended to use a secret stored in the Secrets Manager, but in that case, the lambda doing the dump needs a route to access the Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.idSuffix">idSuffix</a></code> | <code>string</code> | Suffix to add to the resource ID. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaEnv">lambdaEnv</a></code> | <code>{[ key: string ]: string}</code> | Environment variables to set in the lambda function. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaNsg">lambdaNsg</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup[]</code> | Security group to allow access to the lambda function. |
-| <code><a href="#cdk-rds-dump.RdsDumpProps.property.secretId">secretId</a></code> | <code>string</code> | Database connection information stored in the Secrets Manager. |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.secretId">secretId</a></code> | <code>string</code> | Secret id for database connection information stored in the Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.secretsManagerVPCEndpointNsgId">secretsManagerVPCEndpointNsgId</a></code> | <code>string</code> | List of IDs of security groups to attach to the Interface Endpoint for Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.unsecurePassword">unsecurePassword</a></code> | <code>string</code> | Database Password. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.unsecureUserName">unsecureUserName</a></code> | <code>string</code> | Database username. |
-
----
-
-##### `createSecretsManagerVPCEndpoint`<sup>Required</sup> <a name="createSecretsManagerVPCEndpoint" id="cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint"></a>
-
-```typescript
-public readonly createSecretsManagerVPCEndpoint: boolean;
-```
-
-- *Type:* boolean
-
-It is recommended to use a secret stored in the Secrets Manager, but in that case, the lambda doing the dump needs a route to access the Secrets Manager.
-
-If createSecretsManagerVPCEndpoint is true, an Interface Endpoint is created to allow access to the Secrets Manager.
 
 ---
 
@@ -219,10 +205,10 @@ Database name to dump.
 ##### `dbEngine`<sup>Required</sup> <a name="dbEngine" id="cdk-rds-dump.RdsDumpProps.property.dbEngine"></a>
 
 ```typescript
-public readonly dbEngine: string;
+public readonly dbEngine: DbEngine;
 ```
 
-- *Type:* string
+- *Type:* <a href="#cdk-rds-dump.DbEngine">DbEngine</a>
 
 Select DB engine type.
 
@@ -260,6 +246,21 @@ events.Schedule.cron({ minute: "0", hour: "0" })
 
 ---
 
+##### `createSecretsManagerVPCEndpoint`<sup>Optional</sup> <a name="createSecretsManagerVPCEndpoint" id="cdk-rds-dump.RdsDumpProps.property.createSecretsManagerVPCEndpoint"></a>
+
+```typescript
+public readonly createSecretsManagerVPCEndpoint: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+It is recommended to use a secret stored in the Secrets Manager, but in that case, the lambda doing the dump needs a route to access the Secrets Manager.
+
+If createSecretsManagerVPCEndpoint is true, an Interface Endpoint is created to allow access to the Secrets Manager.
+
+---
+
 ##### `idSuffix`<sup>Optional</sup> <a name="idSuffix" id="cdk-rds-dump.RdsDumpProps.property.idSuffix"></a>
 
 ```typescript
@@ -267,6 +268,7 @@ public readonly idSuffix: string;
 ```
 
 - *Type:* string
+- *Default:* no suffix
 
 Suffix to add to the resource ID.
 
@@ -279,6 +281,7 @@ public readonly lambdaEnv: {[ key: string ]: string};
 ```
 
 - *Type:* {[ key: string ]: string}
+- *Default:* no environment variables
 
 Environment variables to set in the lambda function.
 
@@ -293,6 +296,7 @@ public readonly lambdaNsg: ISecurityGroup[];
 ```
 
 - *Type:* aws-cdk-lib.aws_ec2.ISecurityGroup[]
+- *Default:* use auto generated security group
 
 Security group to allow access to the lambda function.
 
@@ -305,8 +309,9 @@ public readonly secretId: string;
 ```
 
 - *Type:* string
+- *Default:* use database cluster's secret
 
-Database connection information stored in the Secrets Manager.
+Secret id for database connection information stored in the Secrets Manager.
 
 We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
 but it is also possible to specify the user name and password directly.
@@ -321,6 +326,7 @@ public readonly secretsManagerVPCEndpointNsgId: string;
 ```
 
 - *Type:* string
+- *Default:* use auto generated security group
 
 List of IDs of security groups to attach to the Interface Endpoint for Secrets Manager.
 
@@ -335,12 +341,13 @@ public readonly unsecurePassword: string;
 ```
 
 - *Type:* string
+- *Default:* do not use unsecurePassword
 
 Database Password.
 
 We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
 but it is also possible to specify the user name and password directly.
-unsecurePassword is a parameter to pass the password when the latter is used.
+unsecurePassword is a parameter to pass the password when the `unsecureUsername` is used.
 
 ---
 
@@ -351,14 +358,31 @@ public readonly unsecureUserName: string;
 ```
 
 - *Type:* string
+- *Default:* do not use unsecureUserName
 
 Database username.
 
 We recommend using the secret stored in the Secrets Manager as the connection information to the DB,
 but it is also possible to specify the user name and password directly.
-unsecureUserName is a parameter to pass the user name when the latter is used.
+unsecureUserName is a parameter to pass the user name when the `unsecurePassword` is used.
 
 ---
 
 
+
+## Enums <a name="Enums" id="Enums"></a>
+
+### DbEngine <a name="DbEngine" id="cdk-rds-dump.DbEngine"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-rds-dump.DbEngine.MYSQL">MYSQL</a></code> | *No description.* |
+
+---
+
+##### `MYSQL` <a name="MYSQL" id="cdk-rds-dump.DbEngine.MYSQL"></a>
+
+---
 
