@@ -3,15 +3,16 @@ import { ReleaseTrigger } from "projen/lib/release";
 const project = new awscdk.AwsCdkConstructLibrary({
   author: "Kazuho CryerShinozuka",
   authorAddress: "malaysia.cryer@gmail.com",
-  cdkVersion: "2.87.0",
+  cdkVersion: "2.125.0",
   defaultReleaseBranch: "main",
-  jsiiVersion: "~5.0.0",
+  jsiiVersion: "~5.3.0",
   name: "cdk-rds-dump",
   projenrcTs: true,
   prettier: true,
   repositoryUrl: "https://github.com/badmintoncryer/cdk-rds-dump.git",
   description: "CDK Construct Library by Typescript for RDS Dump",
-  keywords: ["aws", "cdk", "lambda", "aws-cdk"],
+  keywords: ["aws", "cdk", "lambda", "aws-cdk", "rds"],
+  gitignore: ["*.js", "*.d.ts", "!test/.*.snapshot/**/*", ".tmp"],
   python: {
     distName: "cdk-rds-dump",
     module: "cdk_rds_dump",
@@ -25,12 +26,16 @@ const project = new awscdk.AwsCdkConstructLibrary({
   //   mavenGroupId: 'com.github.malaysia-cryer',
   //   mavenArtifactId: 'cdk-rds-dump',
   // },
-  majorVersion: 1,
+  majorVersion: 2,
   releaseTrigger: ReleaseTrigger.continuous(),
   bundledDeps: [
     "mysqldump",
     "@aws-sdk/client-s3",
     "@aws-sdk/client-secrets-manager",
+  ],
+  devDeps: [
+    "@aws-cdk/integ-runner@2.125.0-alpha.0",
+    "@aws-cdk/integ-tests-alpha@2.125.0-alpha.0",
   ],
 
   // deps: ["mysqldump", "@aws-sdk/client-s3", "@aws-sdk/client-secrets-manager"],
@@ -38,4 +43,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The "name" in package.json. */
 });
+project.projectBuild.testTask.exec(
+  "yarn tsc -p tsconfig.dev.json && yarn integ-runner",
+);
 project.synth();

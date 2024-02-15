@@ -12,11 +12,8 @@ interface GetSecretReturnType {
 }
 
 const dbEngine = process.env.ENGINE ?? "";
-const dbEndpoint =
-  // 開発、テスト、本番環境ではactions yaml上で定義されたAURORA ENDPOINT環境変数を使用する
-  // テスト時にはlocalhostへとアクセスする。NODE_ENVはjest側で定義される
-  process.env.AURORA_ENDPOINT ?? "";
-const auroraSecretId = process.env.AURORA_SECRET_ID ?? "";
+const dbEndpoint = process.env.RDS_ENDPOINT ?? "";
+const auroraSecretId = process.env.RDS_SECRET_ID ?? "";
 const s3Bucket = process.env.S3_BUCKET ?? "";
 const databaseName = process.env.DATABASE_NAME ?? "";
 
@@ -34,28 +31,34 @@ export const handler = async (_event: any, _context: any): Promise<void> => {
     const { username, password } = await getDbCredentials();
     const dumpFilePath = "/tmp/dump.sql";
 
-    if (dbEngine === "mysql") {
-      // MySQLからデータをダンプ
-      // TODO ライブラリ自体は既にpublic archive済み。代替手段を考えたほうが良いかも...??
-      await mysqldump({
-        connection: {
-          host: dbEndpoint,
-          user: username,
-          password,
-          database: databaseName,
-        },
-        dumpToFile: dumpFilePath,
-      });
+    switch (dbEngine) {
+      case "mysql":
+        console.log("Dumping MySQL...");
+        // Dump MySQL
+        // TODO The library itself has already been archived in a public repository.
+        // It might be a good idea to consider alternative options...?
+        await mysqldump({
+          connection: {
+            host: dbEndpoint,
+            user: username,
+            password,
+            database: databaseName,
+          },
+          dumpToFile: dumpFilePath,
+        });
+        break;
+      default:
+        throw new Error("Unsupported DB engine.");
     }
 
     console.log("DB dump completed.");
 
-    // S3へのアップロード
     const today = new Date();
-    // JSTに変換
-    today.setHours(today.getHours() + 9);
-    const yyyymmdd = today.toISOString().slice(0, 10).replace(/-/g, "");
-    const s3Key = `${yyyymmdd}.sql`;
+    const yyyymmddhhmmss = today
+      .toISOString()
+      .slice(0, 19)
+      .replace(/[-:T]/g, "");
+    const s3Key = `${yyyymmddhhmmss}.sql`;
 
     const data = readFileSync("/tmp/dump.sql");
 
@@ -81,7 +84,7 @@ const getDbCredentials = async (): Promise<{
 }> => {
   let dbUserName = process.env.RDS_USERNAME ?? "";
   let dbPassword = process.env.RDS_PASSWORD ?? "";
-  if (process.env.RDS_SECRET_ID != null) {
+  if (auroraSecretId != null) {
     const { username, password } = await getSecret();
     dbUserName = username;
     dbPassword = password;

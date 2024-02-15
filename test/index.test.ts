@@ -4,7 +4,7 @@ import { Vpc } from "aws-cdk-lib/aws-ec2";
 import { Schedule } from "aws-cdk-lib/aws-events";
 import { DatabaseCluster } from "aws-cdk-lib/aws-rds";
 import * as rds from "aws-cdk-lib/aws-rds";
-import { RdsDump, RdsDumpProps } from "../src";
+import { DbEngine, RdsDump, RdsDumpProps } from "../src";
 
 test("RdsDump construct creates resources", () => {
   const stack = new Stack();
@@ -20,7 +20,7 @@ test("RdsDump construct creates resources", () => {
   });
 
   const rdsDumpProps: RdsDumpProps = {
-    dbEngine: "mysql",
+    dbEngine: DbEngine.MYSQL,
     rdsCluster: rdsCluster,
     schedule: Schedule.cron({ minute: "0", hour: "0" }),
     databaseName: "testDB",
