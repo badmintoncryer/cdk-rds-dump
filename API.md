@@ -27,12 +27,19 @@ Then write CDK code as below:
 import { RdsDump } from 'cdk-rds-dump';
 
 declare const rdsCluster: rds.DatabaseCluster;
-new RdsDump(this, 'MyRdsDump', {
-  dbEngine: "mysql",
-  rdsCluster: rdsCluster,
+new RdsDump(this, "RdsDump", {
+  dbEngine: DbEngine.MYSQL,
+  rdsCluster: cluster,
+  databaseName: "testDatabase",
   schedule: events.Schedule.cron({ minute: "0", hour: "0" }),
-  databaseName: 'myDatabase',
-  createSecretsManagerVPCEndpoint: false,
+  lambdaEnv: {
+    ENV_VAR: "value",
+  },
+  createSecretsManagerVPCEndpoint: true,
+  createS3GatewayEndpoint: true,
+  // DB secret is obtained from rdsCluster.secret as default.
+  // If you want to use a different secret, you can specify it as follows.
+  // secretId: 'secretsmanager-secret-id',
 });
 ```
 
