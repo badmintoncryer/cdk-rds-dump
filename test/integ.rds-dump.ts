@@ -21,20 +21,20 @@ class TestStack extends Stack {
       }),
       writer: rds.ClusterInstance.provisioned("writer"),
       vpc,
-    //   parameterGroup: new rds.ParameterGroup(scope, `parameter-group`, {
-    //     engine: rds.DatabaseClusterEngine.auroraMysql({
-    //       version: rds.AuroraMysqlEngineVersion.VER_3_02_0,
-    //     }),
-    //     parameters: {
-    //       character_set_client: "utf8mb4",
-    //       character_set_connection: "utf8mb4",
-    //       character_set_database: "utf8mb4",
-    //       character_set_results: "utf8mb4",
-    //       character_set_server: "utf8mb4",
-    //       time_zone: "Asia/Tokyo",
-    //       max_connections: "1000",
-    //     },
-    //   }),
+      //   parameterGroup: new rds.ParameterGroup(scope, `parameter-group`, {
+      //     engine: rds.DatabaseClusterEngine.auroraMysql({
+      //       version: rds.AuroraMysqlEngineVersion.VER_3_02_0,
+      //     }),
+      //     parameters: {
+      //       character_set_client: "utf8mb4",
+      //       character_set_connection: "utf8mb4",
+      //       character_set_database: "utf8mb4",
+      //       character_set_results: "utf8mb4",
+      //       character_set_server: "utf8mb4",
+      //       time_zone: "Asia/Tokyo",
+      //       max_connections: "1000",
+      //     },
+      //   }),
     });
 
     new RdsDump(this, "RdsDump", {
