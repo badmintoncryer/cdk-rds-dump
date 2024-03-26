@@ -24,7 +24,7 @@ npm i cdk-rds-dump
 Then write CDK code as below:
 
 ```ts
-import { RdsDump } from 'cdk-rds-dump';
+import { RdsDump, DbEngine } from 'cdk-rds-dump';
 
 declare const rdsCluster: rds.DatabaseCluster;
 new RdsDump(this, "RdsDump", {
@@ -47,7 +47,7 @@ new RdsDump(this, "RdsDump", {
 
 This code creates a new RDS cluster and uses the RdsDump Construct to dump the data from that RDS cluster. The dumped data is generated as an SQL file and stored in Amazon S3.
 
-For detailed usage and details of the parameters, refer to the API documentation.
+For detailed usage and details of the parameters, refer to the [API documentation](./API.md).
 
 ## Why do we need this construct?
 
