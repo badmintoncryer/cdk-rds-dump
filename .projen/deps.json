@@ -2,12 +2,12 @@
   "dependencies": [
     {
       "name": "@aws-cdk/integ-runner",
-      "version": "2.125.0-alpha.0",
+      "version": "2.135.0-alpha.0",
       "type": "build"
     },
     {
       "name": "@aws-cdk/integ-tests-alpha",
-      "version": "2.125.0-alpha.0",
+      "version": "2.135.0-alpha.0",
       "type": "build"
     },
     {
@@ -109,6 +109,10 @@
     {
       "name": "typescript",
       "type": "build"
+    },
+    {
+      "name": "@aws-sdk/client-rds",
+      "type": "bundled"
     },
     {
       "name": "@aws-sdk/client-s3",

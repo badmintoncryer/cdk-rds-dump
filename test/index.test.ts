@@ -1,28 +1,26 @@
-import { Stack } from "aws-cdk-lib";
+import { App, Stack } from "aws-cdk-lib";
 import { Template } from "aws-cdk-lib/assertions";
-import { Vpc } from "aws-cdk-lib/aws-ec2";
-import { Schedule } from "aws-cdk-lib/aws-events";
-import { DatabaseCluster } from "aws-cdk-lib/aws-rds";
+import * as ec2 from "aws-cdk-lib/aws-ec2";
+import * as events from "aws-cdk-lib/aws-events";
 import * as rds from "aws-cdk-lib/aws-rds";
 import { DbEngine, RdsDump, RdsDumpProps } from "../src";
 
 test("RdsDump construct creates resources", () => {
-  const stack = new Stack();
+  const app = new App();
+  const stack = new Stack(app);
 
-  // Your DatabaseCluster
-  const rdsCluster = new DatabaseCluster(stack, "DatabaseClusterId", {
+  const rdsCluster = new rds.DatabaseCluster(stack, "DatabaseClusterId", {
     engine: rds.DatabaseClusterEngine.auroraMysql({
-      version: rds.AuroraMysqlEngineVersion.VER_2_07_2,
+      version: rds.AuroraMysqlEngineVersion.VER_3_05_1,
     }),
-    instanceProps: {
-      vpc: new Vpc(stack, "VpcId"),
-    },
+    vpc: new ec2.Vpc(stack, "VpcId"),
+    writer: rds.ClusterInstance.serverlessV2("writerInstance"),
   });
 
   const rdsDumpProps: RdsDumpProps = {
     dbEngine: DbEngine.MYSQL,
     rdsCluster: rdsCluster,
-    schedule: Schedule.cron({ minute: "0", hour: "0" }),
+    schedule: events.Schedule.cron({ minute: "0", hour: "0" }),
     databaseName: "testDB",
     secretId: "testSecretId",
     createSecretsManagerVPCEndpoint: false,

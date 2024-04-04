@@ -32,10 +32,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
     "mysqldump",
     "@aws-sdk/client-s3",
     "@aws-sdk/client-secrets-manager",
+    "@aws-sdk/client-rds",
   ],
   devDeps: [
-    "@aws-cdk/integ-runner@2.125.0-alpha.0",
-    "@aws-cdk/integ-tests-alpha@2.125.0-alpha.0",
+    "@aws-cdk/integ-runner@2.135.0-alpha.0",
+    "@aws-cdk/integ-tests-alpha@2.135.0-alpha.0",
   ],
 
   // deps: ["mysqldump", "@aws-sdk/client-s3", "@aws-sdk/client-secrets-manager"],
