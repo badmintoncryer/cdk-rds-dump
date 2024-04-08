@@ -105,6 +105,13 @@ export interface RdsDumpProps {
    * @default - use auto generated security group
    */
   readonly secretsManagerVPCEndpointNsgId?: string;
+
+  /**
+   * The amount of memory in MB allocated to the Lambda function.
+   *
+   * @default 1024
+   */
+  readonly memorySize?: number;
 }
 
 export class RdsDump extends Construct {
@@ -125,6 +132,7 @@ export class RdsDump extends Construct {
       createSecretsManagerVPCEndpoint,
       createS3GatewayEndpoint,
       secretsManagerVPCEndpointNsgId,
+      memorySize = 1024,
     }: RdsDumpProps,
   ) {
     super(scope, id);
@@ -175,7 +183,7 @@ export class RdsDump extends Construct {
     });
 
     const dumpLambda = new DumpFunction(scope, `dump-lambda-${idSuffix}`, {
-      memorySize: 1024,
+      memorySize,
       timeout: Duration.minutes(15),
       environment: {
         S3_BUCKET: dumpBucket.bucketName,
