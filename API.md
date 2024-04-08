@@ -191,6 +191,7 @@ const rdsDumpProps: RdsDumpProps = { ... }
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.idSuffix">idSuffix</a></code> | <code>string</code> | Suffix to add to the resource ID. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaEnv">lambdaEnv</a></code> | <code>{[ key: string ]: string}</code> | Environment variables to set in the lambda function. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.lambdaNsg">lambdaNsg</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup[]</code> | Security group to allow access to the lambda function. |
+| <code><a href="#cdk-rds-dump.RdsDumpProps.property.memorySize">memorySize</a></code> | <code>number</code> | The amount of memory in MB allocated to the Lambda function. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.secretId">secretId</a></code> | <code>string</code> | Secret id for database connection information stored in the Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.secretsManagerVPCEndpointNsgId">secretsManagerVPCEndpointNsgId</a></code> | <code>string</code> | List of IDs of security groups to attach to the Interface Endpoint for Secrets Manager. |
 | <code><a href="#cdk-rds-dump.RdsDumpProps.property.unsecurePassword">unsecurePassword</a></code> | <code>string</code> | Database Password. |
@@ -322,6 +323,19 @@ public readonly lambdaNsg: ISecurityGroup[];
 - *Default:* use auto generated security group
 
 Security group to allow access to the lambda function.
+
+---
+
+##### `memorySize`<sup>Optional</sup> <a name="memorySize" id="cdk-rds-dump.RdsDumpProps.property.memorySize"></a>
+
+```typescript
+public readonly memorySize: number;
+```
+
+- *Type:* number
+- *Default:* 1024
+
+The amount of memory in MB allocated to the Lambda function.
 
 ---
 
