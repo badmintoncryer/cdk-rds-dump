@@ -1,5 +1,5 @@
-import { IntegTest } from "@aws-cdk/integ-tests-alpha";
-import { App, Stack, StackProps } from "aws-cdk-lib";
+import { ExpectedResult, IntegTest } from "@aws-cdk/integ-tests-alpha";
+import { App, Stack } from "aws-cdk-lib";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as events from "aws-cdk-lib/aws-events";
 import * as nodejsFunction from "aws-cdk-lib/aws-lambda-nodejs";
@@ -20,6 +20,11 @@ const cluster = new rds.DatabaseCluster(stack, "Cluster", {
   writer: rds.ClusterInstance.provisioned("writer"),
   vpc,
 });
+
+const clusterSecretId = cluster.secret?.secretName;
+if (clusterSecretId == null || clusterSecretId === "") {
+  throw new Error("Cluster secret id not found");
+}
 
 const rdsDump = new RdsDump(stack, "RdsDump", {
   dbEngine: DbEngine.MYSQL,
@@ -45,23 +50,34 @@ const setupDbHandler = new nodejsFunction.NodejsFunction(
       loader: { ".ts": "ts" },
     },
     environment: {
-      CLUSTER_SECRET_ARN: cluster.secret?.secretArn ?? "",
+      RDS_ENDPOINT: cluster.clusterEndpoint.hostname,
+      RDS_SECRET_ID: clusterSecretId,
     },
+    vpc,
   },
 );
 cluster.secret?.grantRead(setupDbHandler);
+cluster.connections.allowFrom(setupDbHandler, ec2.Port.tcp(3306));
 
 const integ = new IntegTest(app, "Test", {
   testCases: [stack],
 });
-integ.assertions
-  .invokeFunction({
-    functionName: setupDbHandler.functionName,
-  })
-  .waitForAssertions();
+const setupDbAssertion = integ.assertions.invokeFunction({
+  functionName: setupDbHandler.functionName,
+});
+setupDbAssertion.expect(
+  ExpectedResult.objectLike({
+    StatusCode: 200,
+    Payload: { message: "Database and table created successfully!" },
+  }),
+);
 
-integ.assertions
-  .invokeFunction({
-    functionName: rdsDump.dumpLambdaName,
-  })
-  .waitForAssertions();
+const dumpAssertion = integ.assertions.invokeFunction({
+  functionName: rdsDump.dumpLambdaName,
+});
+dumpAssertion.expect(
+  ExpectedResult.objectLike({
+    StatusCode: 200,
+    Payload: { message: "DB dump has finished successfully!" },
+  }),
+);

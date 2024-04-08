@@ -11,7 +11,7 @@ test("RdsDump construct creates resources", () => {
 
   const rdsCluster = new rds.DatabaseCluster(stack, "DatabaseClusterId", {
     engine: rds.DatabaseClusterEngine.auroraMysql({
-      version: rds.AuroraMysqlEngineVersion.VER_3_05_1,
+      version: rds.AuroraMysqlEngineVersion.VER_3_06_0,
     }),
     vpc: new ec2.Vpc(stack, "VpcId"),
     writer: rds.ClusterInstance.serverlessV2("writerInstance"),

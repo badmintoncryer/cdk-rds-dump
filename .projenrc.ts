@@ -3,7 +3,7 @@ import { ReleaseTrigger } from "projen/lib/release";
 const project = new awscdk.AwsCdkConstructLibrary({
   author: "Kazuho CryerShinozuka",
   authorAddress: "malaysia.cryer@gmail.com",
-  cdkVersion: "2.125.0",
+  cdkVersion: "2.135.0",
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.3.0",
   name: "cdk-rds-dump",
@@ -30,9 +30,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
   releaseTrigger: ReleaseTrigger.continuous(),
   bundledDeps: [
     "mysqldump",
+    "mysql2",
     "@aws-sdk/client-s3",
     "@aws-sdk/client-secrets-manager",
-    "@aws-sdk/client-rds",
+    "@aws-sdk/client-rds-data",
   ],
   devDeps: [
     "@aws-cdk/integ-runner@2.135.0-alpha.0",

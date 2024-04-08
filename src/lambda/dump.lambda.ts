@@ -24,7 +24,7 @@ if (dbEngine === "") {
   throw new Error("ENGINE is not defined.");
 }
 
-export const handler = async (_event: any, _context: any): Promise<void> => {
+export const handler = async (_event: any, _context: any) => {
   try {
     console.log("Starting DB dump...");
 
@@ -72,6 +72,12 @@ export const handler = async (_event: any, _context: any): Promise<void> => {
     await s3Client.send(command);
 
     console.log("DB dump uploaded to S3.");
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "DB dump has finished successfully!",
+      }),
+    };
   } catch (error) {
     console.error("An error occurred while dumping DB.", error);
     throw error;

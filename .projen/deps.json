@@ -111,7 +111,7 @@
       "type": "build"
     },
     {
-      "name": "@aws-sdk/client-rds",
+      "name": "@aws-sdk/client-rds-data",
       "type": "bundled"
     },
     {
@@ -123,12 +123,16 @@
       "type": "bundled"
     },
     {
+      "name": "mysql2",
+      "type": "bundled"
+    },
+    {
       "name": "mysqldump",
       "type": "bundled"
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.125.0",
+      "version": "^2.135.0",
       "type": "peer"
     },
     {

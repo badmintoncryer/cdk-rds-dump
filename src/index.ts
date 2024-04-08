@@ -118,10 +118,10 @@ export interface RdsDumpProps {
  * Construct to dump the contents of an RDS database to S3.
  */
 export class RdsDump extends Construct {
-  // /**
-  //  * Lambda function name to dump the contents of an RDS database to S3.
-  //  */
-  // public readonly dumpLambdaName: string;
+  /**
+   * Lambda function name to dump the contents of an RDS database to S3.
+   */
+  public readonly dumpLambdaName: string;
 
   constructor(
     scope: Construct,
@@ -211,7 +211,7 @@ export class RdsDump extends Construct {
           securityGroups: lambdaNsg,
         }),
     });
-    // this.dumpLambdaName = dumpLambda.functionName;
+    this.dumpLambdaName = dumpLambda.functionName;
 
     rdsCluster.secret?.grantRead(dumpLambda);
     dumpBucket.grantWrite(dumpLambda);
