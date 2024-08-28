@@ -24,6 +24,7 @@ npm i cdk-rds-dump
 Then write CDK code as below:
 
 ```ts
+import * as events from 'aws-cdk-lib/aws-events'
 import { RdsDump, DbEngine } from 'cdk-rds-dump';
 
 declare const rdsCluster: rds.DatabaseCluster;
