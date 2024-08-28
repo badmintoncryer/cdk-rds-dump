@@ -33,15 +33,29 @@ new RdsDump(this, "RdsDump", {
   rdsCluster: cluster,
   databaseName: "testDatabase",
   schedule: events.Schedule.cron({ minute: "0", hour: "0" }),
+  // optional
   lambdaEnv: {
     ENV_VAR: "value",
   },
-  createSecretsManagerVPCEndpoint: true,
-  createS3GatewayEndpoint: true,
+  // optional
+  createSecretsManagerVPCEndpoint: false,
   // DB secret is obtained from rdsCluster.secret as default.
   // If you want to use a different secret, you can specify it as follows.
   // secretId: 'secretsmanager-secret-id',
 });
+```
+
+**Note**: Assuming access to S3 via a Gateway Endpoint from within a VPC, please configure the Gateway Endpoint and update the Route Table based on this.
+
+```ts
+// Add gateway endpoints when creating the VPC
+  const vpc = new ec2.Vpc(this, 'MyVpc', {
+    gatewayEndpoints: {
+      S3: {
+        service: ec2.GatewayVpcEndpointAwsService.S3,
+      },
+    },
+  });
 ```
 
 ## How does it work?
