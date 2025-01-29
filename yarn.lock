@@ -10,20 +10,20 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@aws-cdk/asset-awscli-v1@^2.2.202":
-  version "2.2.202"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/asset-awscli-v1/-/asset-awscli-v1-2.2.202.tgz#4627201d71f6a5c60db36385ce09cb81005f4b32"
-  integrity sha512-JqlF0D4+EVugnG5dAsNZMqhu3HW7ehOXm5SDMxMbXNDMdsF0pxtQKNHRl52z1U9igsHmaFpUgSGjbhAJ+0JONg==
+"@aws-cdk/asset-awscli-v1@^2.2.208":
+  version "2.2.221"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/asset-awscli-v1/-/asset-awscli-v1-2.2.221.tgz#747506051071610dbe054d7266208fd9afb2fff2"
+  integrity sha512-+Vu2cMvgtkaHwNezrTVng4+FAMAWKJTkC/2ZQlgkbY05k0lHHK/2eWKqBhTeA7EpxVrx9uFN7GdBFz3mcThpxg==
 
-"@aws-cdk/asset-kubectl-v20@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/asset-kubectl-v20/-/asset-kubectl-v20-2.1.2.tgz#d8e20b5f5dc20128ea2000dc479ca3c7ddc27248"
-  integrity sha512-3M2tELJOxQv0apCIiuKQ4pAbncz9GuLwnKFqxifWfe77wuMxyTRPmxssYHs42ePqzap1LT6GDcPygGs+hHstLg==
+"@aws-cdk/asset-kubectl-v20@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/asset-kubectl-v20/-/asset-kubectl-v20-2.1.3.tgz#80e09004be173995e91614e34d947da11dd9ff4d"
+  integrity sha512-cDG1w3ieM6eOT9mTefRuTypk95+oyD7P5X/wRltwmYxU7nZc3+076YEVS6vrjDKr3ADYbfn0lDKpfB1FBtO9CQ==
 
-"@aws-cdk/asset-node-proxy-agent-v6@^2.0.1":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/asset-node-proxy-agent-v6/-/asset-node-proxy-agent-v6-2.0.3.tgz#9b5d213b5ce5ad4461f6a4720195ff8de72e6523"
-  integrity sha512-twhuEG+JPOYCYPx/xy5uH2+VUsIEhPTzDY0F1KuB+ocjWWB/KEDiOVL19nHvbPCB6fhWnkykXEMJ4HHcKvjtvg==
+"@aws-cdk/asset-node-proxy-agent-v6@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/asset-node-proxy-agent-v6/-/asset-node-proxy-agent-v6-2.1.0.tgz#6d3c7860354d4856a7e75375f2f0ecab313b4989"
+  integrity sha512-7bY3J8GCVxLupn/kNmpPc5VJz8grx+4RKfnnJiO1LG+uxkZfANZG3RMHhE+qQxxwkyQ9/MfPtTpf748UhR425A==
 
 "@aws-cdk/aws-service-spec@0.0.45":
   version "0.0.45"
@@ -32,6 +32,14 @@
   dependencies:
     "@aws-cdk/service-spec-types" "^0.0.45"
     "@cdklabs/tskb" "^0.0.3"
+
+"@aws-cdk/cloud-assembly-schema@^39.2.0":
+  version "39.2.8"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/cloud-assembly-schema/-/cloud-assembly-schema-39.2.8.tgz#2e953547e3d67487179090a82dac7d9c0a6de723"
+  integrity sha512-VkppFgLbm5M1/K8S+BimI/0COq+E9fCDcdDyAe4gFizHNZTALZA4sMds2kug1rtPFKCcWAexrycs2D4iQHcRCw==
+  dependencies:
+    jsonschema "~1.4.1"
+    semver "^7.6.3"
 
 "@aws-cdk/integ-runner@2.125.0-alpha.0":
   version "2.125.0-alpha.0"
@@ -2462,23 +2470,25 @@ available-typed-arrays@^1.0.7:
   dependencies:
     possible-typed-array-names "^1.0.0"
 
-aws-cdk-lib@2.125.0:
-  version "2.125.0"
-  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.125.0.tgz#c3b1f2f6b8aed8b1ac8cee233ceea471a09f427f"
-  integrity sha512-yRcHuvpPYHuvffeJCnTSIqo6y+Qjeuf+BKmr/oyMcMhyfIzcGFFhh+ZQRCTYIJTfTyU6nh73TLhsZ4TmzFuBBA==
+aws-cdk-lib@2.177.0:
+  version "2.177.0"
+  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.177.0.tgz#dd161eb9b3fca56d0677c903ff758780a3eeb974"
+  integrity sha512-nTnHAwjZaPJ5gfJjtzE/MyK6q0a66nWthoJl7l8srucRb+I30dczhbbXor6QCdVpJaTRAEliMOMq23aglsAQbg==
   dependencies:
-    "@aws-cdk/asset-awscli-v1" "^2.2.202"
-    "@aws-cdk/asset-kubectl-v20" "^2.1.2"
-    "@aws-cdk/asset-node-proxy-agent-v6" "^2.0.1"
+    "@aws-cdk/asset-awscli-v1" "^2.2.208"
+    "@aws-cdk/asset-kubectl-v20" "^2.1.3"
+    "@aws-cdk/asset-node-proxy-agent-v6" "^2.1.0"
+    "@aws-cdk/cloud-assembly-schema" "^39.2.0"
     "@balena/dockerignore" "^1.0.2"
     case "1.6.3"
     fs-extra "^11.2.0"
-    ignore "^5.3.0"
+    ignore "^5.3.2"
     jsonschema "^1.4.1"
+    mime-types "^2.1.35"
     minimatch "^3.1.2"
     punycode "^2.3.1"
-    semver "^7.5.4"
-    table "^6.8.1"
+    semver "^7.6.3"
+    table "^6.8.2"
     yaml "1.10.2"
 
 aws-cdk@2.125.0:
@@ -4134,7 +4144,7 @@ iconv-lite@0.6.3, iconv-lite@^0.6.3:
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
 
-ignore@^5.2.0, ignore@^5.3.0, ignore@^5.3.1:
+ignore@^5.2.0, ignore@^5.3.1, ignore@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.3.2.tgz#3cd40e729f3643fd87cb04e50bf0eb722bc596f5"
   integrity sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==
@@ -5042,7 +5052,7 @@ jsonparse@^1.2.0:
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
   integrity sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==
 
-jsonschema@^1.4.1:
+jsonschema@^1.4.1, jsonschema@~1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.4.1.tgz#cc4c3f0077fb4542982973d8a083b6b34f482dab"
   integrity sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==
@@ -5256,7 +5266,7 @@ mime-db@1.52.0:
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
   integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
 
-mime-types@^2.1.12:
+mime-types@^2.1.12, mime-types@^2.1.35:
   version "2.1.35"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.35.tgz#381a871b62a734450660ae3deee44813f70d959a"
   integrity sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==
@@ -6329,10 +6339,10 @@ synckit@^0.9.1:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
 
-table@^6.8.1:
-  version "6.8.2"
-  resolved "https://registry.yarnpkg.com/table/-/table-6.8.2.tgz#c5504ccf201213fa227248bdc8c5569716ac6c58"
-  integrity sha512-w2sfv80nrAh2VCbqR5AK27wswXhqcck2AhfnNW76beQXskGZ1V12GwS//yYVa3d3fcvAip2OUnbDAjW2k3v9fA==
+table@^6.8.2:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/table/-/table-6.9.0.tgz#50040afa6264141c7566b3b81d4d82c47a8668f5"
+  integrity sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==
   dependencies:
     ajv "^8.0.1"
     lodash.truncate "^4.4.2"
