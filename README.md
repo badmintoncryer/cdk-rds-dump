@@ -10,7 +10,7 @@ cdk-rds-dump is a Constructs library for AWS CDK that provides the functionality
 [![Build Status](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/build.yml/badge.svg)](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/build.yml)
 [![Release Status](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/release.yml/badge.svg)](https://github.com/badmintoncryer/cdk-rds-dump/actions/workflows/release.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![npm downloads](https://img.shields.io/npm/dm/cdk-rds-dump.svg?style=flat)](https://www.npmjs.com/package/cdk-rds-dump)
+[![npm downloads](https://img.shields.io/npm/dt/cdk-rds-dump.svg?style=flat)](https://www.npmjs.com/package/cdk-rds-dump)
 
 
 ## Usage
