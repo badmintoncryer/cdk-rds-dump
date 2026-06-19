@@ -34,7 +34,7 @@ test("RdsDump construct creates resources", () => {
   const assert = Template.fromStack(stack);
   assert.hasResourceProperties("AWS::Lambda::Function", {
     Handler: "index.handler",
-    Runtime: "nodejs18.x",
+    Runtime: "nodejs22.x",
     Timeout: 900,
     MemorySize: 1024,
   });

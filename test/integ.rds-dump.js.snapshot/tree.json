@@ -1025,7 +1025,7 @@
             "path": "test-stack/RdsDump",
             "constructInfo": {
               "fqn": "constructs.Construct",
-              "version": "10.0.5"
+              "version": "10.5.1"
             }
           },
           "secrets-manager-vpc-endpoint-default": {
@@ -1405,7 +1405,7 @@
                       "s3Bucket": {
                         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                       },
-                      "s3Key": "668b18e1a89f789914b44a11483558ddd92ccee083e2ff2c2657c964f72a4219.zip"
+                      "s3Key": "81c84e2c17dc523dcdd768a83c9f92c0f2917a9141bd88807f72578762429ea5.zip"
                     },
                     "description": "src/lambda/dump.lambda.ts",
                     "environment": {
@@ -1488,7 +1488,7 @@
                         "Arn"
                       ]
                     },
-                    "runtime": "nodejs18.x",
+                    "runtime": "nodejs22.x",
                     "timeout": 900,
                     "vpcConfig": {
                       "subnetIds": [
@@ -1622,7 +1622,7 @@
                 "path": "Test/DefaultTest/Default",
                 "constructInfo": {
                   "fqn": "constructs.Construct",
-                  "version": "10.0.5"
+                  "version": "10.5.1"
                 }
               },
               "DeployAssert": {
@@ -1668,7 +1668,7 @@
         "path": "Tree",
         "constructInfo": {
           "fqn": "constructs.Construct",
-          "version": "10.0.5"
+          "version": "10.5.1"
         }
       }
     },

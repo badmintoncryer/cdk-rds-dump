@@ -56,7 +56,7 @@
       "description": "Create a JavaScript bundle from src/lambda/dump.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/lambda/dump.lambda.ts --target=\"node18\" --platform=\"node\" --outfile=\"assets/lambda/dump.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/*"
+          "exec": "esbuild --bundle src/lambda/dump.lambda.ts --target=\"node22\" --platform=\"node\" --outfile=\"assets/lambda/dump.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/*"
         }
       ]
     },
@@ -65,7 +65,7 @@
       "description": "Continuously update the JavaScript bundle from src/lambda/dump.lambda.ts",
       "steps": [
         {
-          "exec": "esbuild --bundle src/lambda/dump.lambda.ts --target=\"node18\" --platform=\"node\" --outfile=\"assets/lambda/dump.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/* --watch"
+          "exec": "esbuild --bundle src/lambda/dump.lambda.ts --target=\"node22\" --platform=\"node\" --outfile=\"assets/lambda/dump.lambda/index.js\" --tsconfig=\"tsconfig.dev.json\" --external:@aws-sdk/* --watch"
         }
       ]
     },
@@ -152,6 +152,10 @@
     "eslint": {
       "name": "eslint",
       "description": "Runs eslint against the codebase",
+      "env": {
+        "ESLINT_USE_FLAT_CONFIG": "false",
+        "NODE_NO_WARNINGS": "1"
+      },
       "steps": [
         {
           "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern $@ src test build-tools projenrc .projenrc.ts",
@@ -182,7 +186,7 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist",
+          "spawn": "package:js",
           "condition": "node -e \"if (!process.env.CI) process.exit(1)\""
         },
         {
@@ -318,7 +322,7 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,prettier,projen,ts-jest,ts-node,typescript,@aws-sdk/client-s3,@aws-sdk/client-secrets-manager,mysqldump"
+          "exec": "npx npm-check-updates@20 --upgrade --target=minor --peer --no-deprecated --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,esbuild,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,jsii-diff,jsii-pacmak,prettier,projen,ts-jest,ts-node,typescript,@aws-sdk/client-s3,@aws-sdk/client-secrets-manager,mysqldump"
         },
         {
           "exec": "yarn install --check-files"

@@ -942,7 +942,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "668b18e1a89f789914b44a11483558ddd92ccee083e2ff2c2657c964f72a4219.zip"
+     "S3Key": "81c84e2c17dc523dcdd768a83c9f92c0f2917a9141bd88807f72578762429ea5.zip"
     },
     "Description": "src/lambda/dump.lambda.ts",
     "Environment": {
@@ -1025,7 +1025,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 900,
     "VpcConfig": {
      "SecurityGroupIds": [
